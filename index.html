@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Six - Lottery Drawer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎰 Mark Six Lottery Drawer</h1>
+            <p>Generate random non-repeating integers</p>
+        </header>
+
+        <main>
+            <!-- Configuration Section -->
+            <div class="config-section">
+                <h2>⚙️ Configuration</h2>
+
+                <div class="form-group">
+                    <label for="minRange">Minimum Number</label>
+                    <input type="number" id="minRange" value="1" min="0">
+                    <small>The smallest number in your range</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="maxRange">Maximum Number</label>
+                    <input type="number" id="maxRange" value="49" min="1">
+                    <small>The largest number in your range</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawCount">Number of Draws</label>
+                    <input type="number" id="drawCount" value="5" min="1" max="100">
+                    <small>How many lottery draws to generate (1-100)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="numbersPerDraw">Numbers Per Draw</label>
+                    <input type="number" id="numbersPerDraw" value="6" min="1">
+                    <small>How many numbers in each draw</small>
+                </div>
+
+                <!-- Banker Entries Section -->
+                <div class="form-group checkbox">
+                    <label for="useBanker">
+                        <input type="checkbox" id="useBanker">
+                        Use Banker Entries
+                    </label>
+                </div>
+
+                <div id="bankerConfig" class="hidden">
+                    <div class="form-group">
+                        <label for="bankerNumbers">Banker Numbers (comma-separated)</label>
+                        <input type="text" id="bankerNumbers" placeholder="e.g., 7,14,21">
+                        <small>Numbers that will appear in every draw</small>
+                    </div>
+                </div>
+
+                <button class="btn-generate" onclick="generateDraws()">Generate Draws</button>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="error-message hidden"></div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="results-section hidden">
+                <h2>📊 Results</h2>
+                <div id="resultsContainer"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Mark Six Lottery Drawer v1.0 | Pure JavaScript</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
