@@ -1,0 +1,267 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+main {
+    padding: 40px;
+}
+
+footer {
+    background-color: #f5f5f5;
+    padding: 20px;
+    text-align: center;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Form Styles */
+.config-section {
+    margin-bottom: 40px;
+}
+
+.config-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.form-group input[type="number"],
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.form-group input[type="number"]:focus,
+.form-group input[type="text"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group.checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-group.checkbox label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.form-group.checkbox input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.form-group small {
+    display: block;
+    color: #999;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+
+#bankerConfig {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border-left: 4px solid #667eea;
+}
+
+#bankerConfig.hidden {
+    display: none;
+}
+
+/* Button Styles */
+.btn-generate {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 10px;
+}
+
+.btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-generate:active {
+    transform: translateY(0);
+}
+
+/* Results Styles */
+.results-section {
+    margin-top: 40px;
+}
+
+.results-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.results-section.hidden {
+    display: none;
+}
+
+.draw-container {
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border-left: 5px solid #667eea;
+}
+
+.draw-title {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+    font-size: 1.1em;
+}
+
+.numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 8px;
+}
+
+.number-ball {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.number-ball:hover {
+    transform: scale(1.1);
+}
+
+.number-ball.banker {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border: 2px solid #f5576c;
+}
+
+.banker-label {
+    font-size: 0.8em;
+    color: #999;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* Error Message */
+.error-message {
+    background-color: #fee;
+    color: #c33;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+    border-left: 4px solid #c33;
+    font-weight: 500;
+}
+
+.error-message.hidden {
+    display: none;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    .numbers-grid {
+        grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+        gap: 6px;
+    }
+
+    .number-ball {
+        width: 45px;
+        height: 45px;
+        font-size: 0.95em;
+    }
+}
