@@ -41,10 +41,11 @@ function selectRandomBankers(numbers, bankerCount) {
     }
 
     const shuffled = [...numbers];
+    const len = shuffled.length;
     
     // Fisher-Yates shuffle to select first 'bankerCount' numbers
     for (let i = 0; i < bankerCount; i++) {
-        const j = Math.floor(Math.random() * (shuffled.length - i)) + i;
+        const j = Math.floor(Math.random() * (len - i)) + i;
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
