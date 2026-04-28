@@ -46,15 +46,15 @@
                 <div class="form-group checkbox">
                     <label for="useBanker">
                         <input type="checkbox" id="useBanker">
-                        Use Banker Entries
+                        Use Random Banker Entries
                     </label>
                 </div>
 
                 <div id="bankerConfig" class="hidden">
                     <div class="form-group">
-                        <label for="bankerNumbers">Banker Numbers (comma-separated)</label>
-                        <input type="text" id="bankerNumbers" placeholder="e.g., 7,14,21">
-                        <small>Numbers that will appear in every draw</small>
+                        <label for="bankerCount">Number of Banker Numbers</label>
+                        <input type="number" id="bankerCount" value="2" min="1">
+                        <small>How many numbers from each draw will be randomly selected as bankers</small>
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@
         </main>
 
         <footer>
-            <p>Mark Six Lottery Drawer v1.0 | Pure JavaScript</p>
+            <p>Mark Six Lottery Drawer v1.1 | Pure JavaScript</p>
         </footer>
     </div>
 
