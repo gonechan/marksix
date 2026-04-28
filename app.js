@@ -30,16 +30,25 @@ function generateRandomIntegers(min, max, count) {
 }
 
 /**
- * Parse banker numbers from input string
- * @param {string} input - Comma-separated numbers
+ * Randomly select banker numbers from drawn numbers
+ * @param {number[]} numbers - Array of drawn numbers
+ * @param {number} bankerCount - How many numbers to select as bankers
  * @returns {number[]} Array of banker numbers
  */
-function parseBankerNumbers(input) {
-    return input
-        .split(',')
-        .map(num => num.trim())
-        .filter(num => num !== '')
-        .map(num => parseInt(num, 10));
+function selectRandomBankers(numbers, bankerCount) {
+    if (bankerCount >= numbers.length) {
+        throw new Error(`Cannot select ${bankerCount} banker numbers from ${numbers.length} drawn numbers`);
+    }
+
+    const shuffled = [...numbers];
+    
+    // Fisher-Yates shuffle to select first 'bankerCount' numbers
+    for (let i = 0; i < bankerCount; i++) {
+        const j = Math.floor(Math.random() * (shuffled.length - i)) + i;
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    return shuffled.slice(0, bankerCount).sort((a, b) => a - b);
 }
 
 /**
@@ -52,6 +61,7 @@ function validateInput() {
     const drawCount = parseInt(document.getElementById('drawCount').value);
     const numbersPerDraw = parseInt(document.getElementById('numbersPerDraw').value);
     const useBanker = document.getElementById('useBanker').checked;
+    const bankerCount = useBanker ? parseInt(document.getElementById('bankerCount').value) : 0;
 
     // Validate range
     if (isNaN(minRange) || isNaN(maxRange)) {
@@ -80,33 +90,16 @@ function validateInput() {
         };
     }
 
-    // Validate banker numbers
+    // Validate banker count
     if (useBanker) {
-        const bankerInput = document.getElementById('bankerNumbers').value;
-        if (!bankerInput.trim()) {
-            return { isValid: false, error: 'Please enter banker numbers' };
+        if (isNaN(bankerCount) || bankerCount < 1) {
+            return { isValid: false, error: 'Number of banker entries must be at least 1' };
         }
 
-        const bankerNumbers = parseBankerNumbers(bankerInput);
-        if (bankerNumbers.length === 0) {
-            return { isValid: false, error: 'Invalid banker numbers format' };
-        }
-
-        // Check if banker numbers are within range
-        for (const num of bankerNumbers) {
-            if (num < minRange || num > maxRange) {
-                return { 
-                    isValid: false, 
-                    error: `Banker number ${num} is outside range ${minRange}-${maxRange}` 
-                };
-            }
-        }
-
-        // Check if we have enough remaining numbers
-        if (bankerNumbers.length >= numbersPerDraw) {
+        if (bankerCount >= numbersPerDraw) {
             return { 
                 isValid: false, 
-                error: `Banker numbers (${bankerNumbers.length}) cannot be >= numbers per draw (${numbersPerDraw})` 
+                error: `Number of bankers (${bankerCount}) must be less than numbers per draw (${numbersPerDraw})` 
             };
         }
     }
@@ -138,43 +131,25 @@ function generateDraws() {
     const drawCount = parseInt(document.getElementById('drawCount').value);
     const numbersPerDraw = parseInt(document.getElementById('numbersPerDraw').value);
     const useBanker = document.getElementById('useBanker').checked;
-    const bankerNumbers = useBanker 
-        ? parseBankerNumbers(document.getElementById('bankerNumbers').value)
-        : [];
+    const bankerCount = useBanker ? parseInt(document.getElementById('bankerCount').value) : 0;
 
     try {
         // Generate draws
         const draws = [];
         for (let i = 0; i < drawCount; i++) {
+            // Generate the main draw
+            const numbers = generateRandomIntegers(minRange, maxRange, numbersPerDraw);
+            
+            // Select random bankers from the drawn numbers if enabled
+            let bankerNumbers = [];
             if (useBanker) {
-                // Generate additional numbers needed (excluding banker numbers)
-                const additionalNeeded = numbersPerDraw - bankerNumbers.length;
-                const availableNumbers = Array.from({ length: maxRange - minRange + 1 }, (_, i) => minRange + i)
-                    .filter(num => !bankerNumbers.includes(num));
-                
-                let additionalNumbers = [];
-                if (additionalNeeded > 0) {
-                    const range = availableNumbers.length;
-                    const selected = availableNumbers.slice();
-                    
-                    for (let j = 0; j < additionalNeeded; j++) {
-                        const k = Math.floor(Math.random() * (range - j)) + j;
-                        [selected[j], selected[k]] = [selected[k], selected[j]];
-                    }
-                    additionalNumbers = selected.slice(0, additionalNeeded);
-                }
-
-                // Combine banker and additional numbers
-                draws.push({
-                    numbers: [...bankerNumbers, ...additionalNumbers].sort((a, b) => a - b),
-                    banker: bankerNumbers
-                });
-            } else {
-                draws.push({
-                    numbers: generateRandomIntegers(minRange, maxRange, numbersPerDraw),
-                    banker: []
-                });
+                bankerNumbers = selectRandomBankers(numbers, bankerCount);
             }
+
+            draws.push({
+                numbers: numbers,
+                banker: bankerNumbers
+            });
         }
 
         // Display results
